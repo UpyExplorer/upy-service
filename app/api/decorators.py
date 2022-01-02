@@ -4,24 +4,47 @@
 Module Docstring
 """
 
-from flask import request
+from flask import current_app as app
+from flask import request, jsonify
 from functools import wraps
 
 
 class BaseDecorator(object):
     """ 
-    Base View to Decorators common to all Webservices.
+    BaseDecorator
     """
+
+    def validate_token(f):
+        @wraps(f)
+        def decorated(data, *args, **kwargs):
+
+            if data['access_token'] == app.config['SECRET_KEY']:
+                return f(data, *args, **kwargs)
+
+            return jsonify(
+                {
+                    "data": {
+                        "status": "fail",
+                        "message": "Permission Denied",
+                        "limit": 1,
+                        "total": 1
+                    },
+                    "result": None
+                }), 401
+        
+        return decorated
 
     def system(f):
         @wraps(f)
         def decorated(*args, **kwargs):
             body = request.data.decode("UTF-8")
             params = request.args.to_dict(flat=False)
+            access_token = request.headers.get('access_token', None)
 
             data = {
                 "body": body,
-                "params": params
+                "params": params,
+                "access_token": request.headers.get('access_token', None)
             }
 
             return f(data, *args, **kwargs)
