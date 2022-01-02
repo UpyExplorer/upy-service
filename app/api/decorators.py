@@ -44,7 +44,7 @@ class BaseDecorator(object):
             data = {
                 "body": body,
                 "params": params,
-                "access_token": request.headers.get('access_token', None)
+                "access_token": access_token
             }
 
             return f(data, *args, **kwargs)
