@@ -4,7 +4,7 @@
 Module Docstring
 """
 
-from flask import Blueprint, redirect, jsonify
+from flask import Blueprint, jsonify
 from app.api.decorators import BaseDecorator
 
 mod_upy = Blueprint('', __name__, url_prefix='')
