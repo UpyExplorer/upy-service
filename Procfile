@@ -1,2 +1,1 @@
-web: python runserver.py
-heroku ps:scale web=1
+web: gunicorn app.wsgi:application --log-file - --log-level debug
