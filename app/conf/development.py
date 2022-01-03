@@ -17,6 +17,7 @@ environ.Env.read_env()
 # warnings.simplefilter('error', DeprecationWarning)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+CONTENT_DIR = os.path.join(BASE_DIR, 'content')
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 DEBUG = True
 
@@ -93,5 +94,18 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(CONTENT_DIR, 'staticfiles')
+STATIC_URL = '/content/static/'
+
+MEDIA_ROOT = os.path.join(CONTENT_DIR, 'media')
+MEDIA_URL = '/content/media/'
+
+STATICFILES_DIRS = [
+    os.path.join(CONTENT_DIR, 'assets'),
+]
+
+LOCALE_PATHS = [
+    os.path.join(CONTENT_DIR, 'locale')
+]
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
