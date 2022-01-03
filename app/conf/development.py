@@ -3,14 +3,24 @@
 """
 Source App
 """
-
+import os
+import environ
+import warnings
+import dj_database_url
 from pathlib import Path
 
+from django.utils.translation import gettext_lazy as _
+
+env = environ.Env()
+environ.Env.read_env()
+
+# warnings.simplefilter('error', DeprecationWarning)
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = 'django-insecure-mng8-*vnb)*i(y7mhi^roh(_(9_gi%zm###03yu6xiidu$as%6'
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=['127.0.0.1', 'localhost'])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -52,11 +62,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(default=env("DJANGO_DATABASE_URL"))
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 AUTH_PASSWORD_VALIDATORS = [
