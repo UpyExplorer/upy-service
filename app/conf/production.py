@@ -1,20 +1,82 @@
+# coding=utf-8
+
+"""
+Source App
+"""
 import os
-from os.path import dirname
+import dj_database_url
+from pathlib import Path
 
-BASE_DIR = dirname(dirname(dirname(os.path.abspath(__file__))))
+from django.utils.translation import gettext_lazy as _
 
-DEBUG = os.getenv("DEBUG")
-PORT = os.getenv("PORT")
-HOST = os.getenv("HOST")
+BASE_DIR = Path(__file__).resolve().parent.parent
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+DEBUG = False
 
-SQLALCHEMY_TRACK_MODIFICATIONS = False
-SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
+ALLOWED_HOSTS = [os.getenv("DJANGO_ALLOWED_HOSTS")]
 
-DATABASE_CONNECT_OPTIONS = {}
-THREADS_PER_PAGE = 2
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
 
-CSRF_ENABLED = True
-CSRF_SESSION_KEY = os.getenv("CSRF_SESSION_KEY")
-SECRET_KEY = os.getenv("SECRET_KEY")
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
 
-RABBITMQ_URL = os.getenv("RABBITMQ_URL")
+ROOT_URLCONF = 'app.urls'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+WSGI_APPLICATION = 'app.wsgi.application'
+
+DATABASES = {
+    'default': dj_database_url.config(default=os.getenv("DJANGO_DATABASE_URL"))
+}
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_TZ = True
+
+STATIC_URL = 'static/'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
