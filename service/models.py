@@ -30,7 +30,7 @@ class WorkStation(models.Model):
 
 class WorkUser(models.Model):
     """
-    Model WorkStation
+    Model WorkUser
     """
     key = models.IntegerField(null=True, default=0)
     user_name = models.CharField(max_length=50, blank=False, null=False)
@@ -43,3 +43,19 @@ class WorkUser(models.Model):
         db_table = 'work_user'
         verbose_name = 'Work User'
         verbose_name_plural = 'Work User'
+
+
+class WorkProcess(models.Model):
+    """
+    Model WorkProcess
+    """
+    work_station = models.ForeignKey(WorkStation, on_delete=models.SET_NULL, null=True)
+    status = models.BooleanField(null=False, default=False)
+
+    class Meta:
+        """
+        Meta
+        """
+        db_table = 'work_process'
+        verbose_name = 'Work Process'
+        verbose_name_plural = 'Work Process'
