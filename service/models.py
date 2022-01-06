@@ -30,7 +30,7 @@ class WorkUser(models.Model):
     Model WorkUser
     """
     key = models.IntegerField(null=True, default=0)
-    user_name = models.CharField(max_length=50, blank=False, null=False)
+    user_name = models.CharField(max_length=50, blank=True, null=True)
     status = models.BooleanField(null=False, default=False)
 
     class Meta:
