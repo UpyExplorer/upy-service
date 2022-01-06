@@ -26,3 +26,20 @@ class WorkStation(models.Model):
         db_table = 'work_station'
         verbose_name = 'Work Station'
         verbose_name_plural = 'Work Station'
+
+
+class WorkUser(models.Model):
+    """
+    Model WorkStation
+    """
+    key = models.IntegerField(null=True, default=0)
+    user_name = models.CharField(max_length=50, blank=False, null=False)
+    status = models.BooleanField(null=False, default=False)
+
+    class Meta:
+        """
+        Meta
+        """
+        db_table = 'work_user'
+        verbose_name = 'Work User'
+        verbose_name_plural = 'Work User'
