@@ -7,8 +7,7 @@ Model Config
 from django.db import models
 
 class WorkStation(models.Model):
-    """
-    Model WorkStation
+    """Model WorkStation
     """
     key = models.CharField(max_length=25, blank=False, null=False)
     description = models.CharField(max_length=100, blank=True, null=True)
@@ -17,8 +16,7 @@ class WorkStation(models.Model):
     status = models.BooleanField(null=False, default=False)
 
     class Meta:
-        """
-        Meta
+        """Meta
         """
         db_table = 'work_station'
         verbose_name = 'Work Station'
@@ -26,16 +24,14 @@ class WorkStation(models.Model):
 
 
 class WorkUser(models.Model):
+    """Model WorkUser
     """
-    Model WorkUser
-    """
-    key = models.IntegerField(null=True, default=0)
-    user_name = models.CharField(max_length=50, blank=True, null=True)
+    company_data_id = models.IntegerField(null=True, default=0)
+    corporate_name = models.CharField(max_length=50, blank=True, null=True)
     status = models.BooleanField(null=False, default=False)
 
     class Meta:
-        """
-        Meta
+        """Meta
         """
         db_table = 'work_user'
         verbose_name = 'Work User'
@@ -43,16 +39,14 @@ class WorkUser(models.Model):
 
 
 class WorkProcess(models.Model):
-    """
-    Model WorkProcess
+    """Model WorkProcess
     """
     work_user = models.ForeignKey(WorkUser, on_delete=models.SET_NULL, null=True)
     work_station = models.ForeignKey(WorkStation, on_delete=models.SET_NULL, null=True)
     status = models.BooleanField(null=False, default=False)
 
     class Meta:
-        """
-        Meta
+        """Meta
         """
         db_table = 'work_process'
         verbose_name = 'Work Process'
