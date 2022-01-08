@@ -3,12 +3,12 @@
 """
 Source App
 """
-import os
-import dj_database_url
-from pathlib import Path
 
+import os
+from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 
+APP_DIR = Path(__file__).resolve().parent.parent.parent
 BASE_DIR = Path(__file__).resolve().parent.parent
 CONTENT_DIR = os.path.join(BASE_DIR, 'content')
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
@@ -64,7 +64,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv("DJANGO_DATABASE_URL"))
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': os.path.join(APP_DIR, 'db_manager.cnf'),
+        },
+    },
+    'manager': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': os.path.join(APP_DIR, 'db_application.cnf'),
+        },
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
