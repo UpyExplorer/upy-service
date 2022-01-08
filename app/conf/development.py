@@ -3,20 +3,20 @@
 """
 Source App
 """
+
 import os
 import environ
-import warnings
-import dj_database_url
+# import warnings
+# import dj_database_url
 from pathlib import Path
-
 from django.utils.translation import gettext_lazy as _
 
 env = environ.Env()
 environ.Env.read_env()
-
 # warnings.simplefilter('error', DeprecationWarning)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+APP_DIR = Path(__file__).resolve().parent.parent.parent
 CONTENT_DIR = os.path.join(BASE_DIR, 'content')
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 DEBUG = True
@@ -72,8 +72,43 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
-    'default': dj_database_url.config(default=env("DJANGO_DATABASE_URL"))
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': os.path.join(APP_DIR, 'db_manager.cnf'),
+        },
+    },
+    'manager': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': os.path.join(APP_DIR, 'db_application.cnf'),
+        },
+    }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'NAME',
+#         'USER': 'USER',
+#         'PASSWORD': 'PASSWORD',
+#         'HOST': 'HOST',
+#         'PORT': '3306',
+#     },
+#     'manager':{
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'NAME',
+#         'USER': 'USER',
+#         'PASSWORD': 'PASSWORD',
+#         'HOST': 'HOST',
+#         'PORT': '3306',
+#     }
+# }
+
+# DATABASES = {
+#     'default': dj_database_url.config(default=env("DJANGO_DATABASE_URL")),
+#     'manager': dj_database_url.config(default=env("DATABASE_URL"))
+# }
 
 # DATABASES = {
 #     'default': {
@@ -81,7 +116,6 @@ DATABASES = {
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
