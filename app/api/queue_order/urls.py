@@ -5,8 +5,8 @@ Module Docstring
 """
 
 from django.urls import path
-from app.api.queue_order.views import queue_order
+from app.api.queue_order.views import QueueOrderView
 
 urlpatterns = [
-    path('', queue_order)
+    path('', QueueOrderView.as_view())
 ]
