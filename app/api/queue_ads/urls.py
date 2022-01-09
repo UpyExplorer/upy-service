@@ -5,8 +5,8 @@ Module Docstring
 """
 
 from django.urls import path
-from app.api.queue_ads.views import queue_ads
+from app.api.queue_ads.views import HelloView
 
 urlpatterns = [
-    path('', queue_ads)
+    path('', HelloView.as_view())
 ]

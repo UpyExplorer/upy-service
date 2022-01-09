@@ -1,6 +1,17 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+# coding=utf-8
 
-@api_view()
-def queue_order(request):
-    return Response({"message": "queue_order"})
+"""
+Module API
+"""
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
+
+class QueueOrderView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        content = {"message": "queue_order"}
+        return Response(content)
