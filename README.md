@@ -5,4 +5,9 @@
 
 - https://github.com/UpyExplorer
 
-### ✔️ upy-service
+### ✔️ Objetivo?
+- Fazer o orquestramento e gerenciamento das filas e também de workstations. 
+
+### ✔️ Tech
+- Python3.9.5
+- Django Rest Framework
